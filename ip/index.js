@@ -1,5 +1,7 @@
 //axios import buraya gelecek
 
+import axios from 'axios';
+
 var benimIP;
 
 
@@ -30,6 +32,7 @@ async function ipAdresimiAl(){
 	NOT: Bilgisayarın IP adresini öğrenmek için: https://apis.ergineer.com/ipadresim 
 	ADIM 5'e gelene kadar fonksiyonunuzu test etmek için ip nizi URL'ye manuel olarak ekleyebilirsiniz.
 */
+
 
 /*
 	ADIM 2: Geri döndürülen verileri inceleyin, bu sizin ip bilgileriniz! Bileşen fonksiyonunuzu geliştirmek içindeki bu veri yapısını
@@ -70,3 +73,63 @@ async function ipAdresimiAl(){
 
 
 //kodlar buraya gelecek
+
+const products = (datas) => {
+
+	const card = document.createElement('div');
+  	card.classList.add('card');
+  
+  	const flagImg = document.createElement('img');
+  	flagImg.src = `${datas.ülkebayrağı}`;
+  	card.append(flagImg);
+  
+	const cardInfo = document.createElement('div');
+  	cardInfo.classList.add('card-info');
+  
+  	const ipH3 = document.createElement('h3');
+  	ipH3.classList.add('ip');
+  	ipH3.textContent = datas.sorgu;
+  	cardInfo.append(ipH3);
+  
+  	const ulkeP = document.createElement('p');
+  	ulkeP.classList.add('ulke');
+  	ulkeP.textContent = `${datas.ülke} (${datas.ülkeKodu})`;
+  	cardInfo.append(ulkeP);
+  
+  	const enlemBoylamP = document.createElement('p');
+  	enlemBoylamP.textContent = `Enlem: ${datas.enlem} Boylam: ${datas.boylam}`;
+  	cardInfo.append(enlemBoylamP);
+  
+  	const sehirP = document.createElement('p');
+  	sehirP.textContent = `Şehir: ${datas.şehir}`;
+  	cardInfo.append(sehirP);
+  
+  	const saatDilimiP = document.createElement('p');
+  	saatDilimiP.textContent = `Saat Dilimi: ${datas.saatdilimi}`;
+  	cardInfo.append(saatDilimiP);
+  
+  	const paraBirimiP = document.createElement('p');
+  	paraBirimiP.textContent = `Para Birimi: ${datas.parabirimi}`;
+  	cardInfo.append(paraBirimiP);
+  
+  	const ispP = document.createElement('p');
+  	ispP.textContent = `ISP: ${datas.isp}`;
+  	cardInfo.append(ispP);
+
+	card.append(cardInfo);
+  
+	  
+	const cardsContainer = document.querySelector('.cards');
+	cardsContainer.append(card);
+}
+
+
+
+axios.get('https://apis.ergineer.com/ipgeoapi/188.119.5.39')
+  .then(response => {
+    const datas = response.data;
+    products(datas);
+  })
+  .catch(error => {
+    console.log(error);
+  });
