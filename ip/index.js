@@ -24,6 +24,8 @@ async function ipAdresimiAl(){
 // ------------ değiştirmeyin --------------
 
 
+
+
 /*
 	ADIM 1: axios kullanarak, aşağıdaki URL'ye GET sorgusu atacağız
     (tag içindeki yere kendi ipnizi yazarak URL'yi oluşturun):
@@ -80,7 +82,7 @@ const products = (datas) => {
   	card.classList.add('card');
   
   	const flagImg = document.createElement('img');
-  	flagImg.src = `${datas.ülkebayrağı}`;
+  	flagImg.setAttribute('src', datas.ülkebayrağı);
   	card.append(flagImg);
   
 	const cardInfo = document.createElement('div');
@@ -123,13 +125,43 @@ const products = (datas) => {
 	cardsContainer.append(card);
 }
 
+async function getData() {
+	try {
+	  await ipAdresimiAl();
+	  const urlm = `https://apis.ergineer.com/ipgeoapi/${benimIP}`;
+	  const genelData = await axios.get(urlm);
+	  console.log("data from server >", genelData.data);
+	  const sayfaImport = document.querySelector(".cards");
+	  sayfaImport.append(products(genelData.data));
+	} catch (error) {
+	  console.log("Oops there is an error > ", error);
+	} finally {
+	  console.log("HTTP request is completed!");
+	}
+  }
+  
+  getData();
 
 
-axios.get('https://apis.ergineer.com/ipgeoapi/188.119.5.39')
-  .then(response => {
-    const datas = response.data;
-    products(datas);
-  })
-  .catch(error => {
-    console.log(error);
-  });
+// async function getApiDetails() {
+// 	await ipAdresimiAl();
+
+// 	axios.get(`https://apis.ergineer.com/ipadresim/${benimIp}`)
+// 	.then(function (response) {
+// 		return response.datas;
+// 	})
+// 	.catch(function (error) {
+// 		console.log(error);
+// 	})
+// }
+
+// getApiDetails();
+
+// axios.get('https://apis.ergineer.com/ipgeoapi/188.119.5.39')
+//   .then(response => {
+//     const datas = response.data;
+//     products(datas);
+//   })
+//   .catch(error => {
+//     console.log(error);
+//   });
